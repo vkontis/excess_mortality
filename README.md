@@ -22,6 +22,6 @@ To run the models, modify `run.R` by setting the variables `OUTPUT_DIR`, `COUNTR
 
 # Detailed results
 
-The file `output/result_summaries.csv` contains results by country, sex, week and age group, as well as totals across sexes and age groups. The columns `q025`, `q050`, ..., `q975` contain the quantiles of interest. For example, `q025` contains the 2.5th percentile, `q500` the 5th percentile, and so on. 
+The file `output/result_summaries.csv` contains results by country, sex, week and age group, as well as totals across sexes and age groups. The columns `q025`, `q050`, ..., `q975` contain the quantiles of interest. For example, `q025` contains the 2.5th percentile, `q050` the 5th percentile, and so on. 
 
 
