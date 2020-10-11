@@ -20,7 +20,7 @@ Weekly deaths data, for all countries until the end of May are available in `dat
 To run the models, modify `run.R` by setting the variables `OUTPUT_DIR`, `COUNTRIES`, `SEXES` and `AGES` to the desired values, and then run the script. It is recommended to run countries in different R sessions, by using a different output folder for each country. 
 
 
-# Detailed results
+## Detailed results
 
 The file `output/result_summaries.csv` contains results by country, sex, week and age group, as well as totals across sexes and age groups. The columns `q025`, `q050`, ..., `q975` contain the quantiles of interest. For example, `q025` contains the 2.5th percentile, `q050` the 5th percentile, and so on. 
 
