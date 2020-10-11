@@ -12,7 +12,7 @@ The code requires `R` version 3.6 or higher and  the following packages: `INLA` 
 
 ## Data 
 
-Weekly deaths data, for all countries until the end of May are available in `data/data.csv`. The data sources are detailed in the published paper. The columns `t2m` and `weekly_t2m_anomaly` contain (weekly average) temperature and deviation of temperature from the long-term average in each week. 
+Weekly deaths data, for all countries until the end of May are available in `data/data.csv`. The data sources are detailed in the published paper. The column `week` contains the date indicating the start of the week. The columns `t2m` and `weekly_t2m_anomaly` contain (weekly average) temperature and deviation of temperature from the long-term average in each week. 
 
 
 ## How to run models
