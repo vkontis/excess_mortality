@@ -3,12 +3,16 @@
 This repository contains the code used in [V. Kontis, J.E. Bennett, T. Rashid, R.M. Parks, J. Pearson-Stuttard, M. Guillot, P. Asaria, B. Zhou, M. Battaglini, G. Corsetti, M. McKee, M. Di Cesare, C. D. Mathers and M. Ezzati, Magnitude, demographics and dynamics of the effect of the first wave of the COVID-19 pandemic on all-cause mortality in 21 industrialized countries. Nature Medicine (2020). doi: 0.1038/s41591-020-1112-0](https://doi.org/10.1038/s41591-020-1112-0).
 
 
-## Prerequisites
+## Dependencies
 
 The code requires `R` version 3.6 or higher and  the following packages: `INLA` (>= 20.03), `tidyverse` (>= 1.3), `glue` (>= 1.4), `logging` (>= 0.10), `matrixStats` (>= 0.56).
 
-`INLA` can be obtained from http://www.r-inla.org/download. The remaining packages are available from CRAN and can be installed using `install.packages()`.
+`INLA` can be obtained from http://www.r-inla.org/download. The remaining packages are available from CRAN and can be installed using `install.packages()`:
 
+```r
+install.packages('INLA', repos = c(getOption('repos'), INLA = 'https://inla.r-inla-download.org/R/stable'), dependencies = TRUE)
+install.packages(c('tidyverse', 'glue', 'logging', 'matrixStats'))
+```
 
 ## Data
 
