@@ -1,6 +1,6 @@
 # Excess mortality estimation
 
-This repository contains the code used in [V. Kontis, J.E. Bennett, T. Rashid, R.M. Parks, J. Pearson-Stuttard, M. Guillot, P. Asaria, B. Zhou, M. Battaglini, G. Corsetti, M. McKee, M. Di Cesare, C. D. Mathers and M. Ezzati, Magnitude, demographics and dynamics of the effect of the first wave of the COVID-19 pandemic on all-cause mortality in 21 industrialized countries. Nature Medicine (2020). doi: 0.1038/s41591-020-1112-0](https://doi.org/10.1038/s41591-020-1112-0).
+This repository contains the code used in [V. Kontis, J.E. Bennett, T. Rashid, R.M. Parks, J. Pearson-Stuttard, M. Guillot, P. Asaria, B. Zhou, M. Battaglini, G. Corsetti, M. McKee, M. Di Cesare, C. D. Mathers and M. Ezzati, Magnitude, demographics and dynamics of the effect of the first wave of the COVID-19 pandemic on all-cause mortality in 21 industrialized countries. Nature Medicine (2020). doi: 0.1038/s41591-020-1112-0](https://www.nature.com/articles/s41591-020-1112-0).
 
 
 ## Dependencies
