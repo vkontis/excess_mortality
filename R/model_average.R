@@ -8,7 +8,7 @@ combine_draws <- function(
     group_vars <- c('country', 'sex', 'age')
     stopifnot(group_vars %in% names(model_grid))
     num_models <- length(unique(model_grid$model_name))
-    # take an equal number of draws from each model
+    # for now uniform weights are hard-coded
     num_draws_per_model <- round(num_posterior_draws / num_models)
     
     model_grid %>%
@@ -25,8 +25,8 @@ combine_draws <- function(
             # take draws of death rates, by sampling from each individual
             # model posterior draws, the appropriate number of times
             rate_draws <- map(d$model, function(m) {
-                stopifnot(nrow(m$fitted_values) ==
-                              nrow(m$posterior_draws[[1]]))
+                stopifnot(isTRUE(
+                    nrow(m$fitted_values) == nrow(m$posterior_draws)))
                 draw_ids <- sample(
                     ncol(m$posterior_draws), size = num_draws_per_model,
                     replace = with_replacement
@@ -58,11 +58,9 @@ combine_draws <- function(
             g %>%
                 mutate(
                     death_draws = list(deaths_draws),
-                    rate_draws = list(rate_draws),
                     data = list(model_data)
-                    # fitted = map(model_grid$model, ~.x$fitted) %>%
-                    #     set_names(model_grid$model_name)
                 )
         }) %>%
         bind_rows
 }
+

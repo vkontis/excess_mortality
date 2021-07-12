@@ -39,7 +39,6 @@ model_fmls <- function(bh_intercepts, lg_shape = .001, lg_rate = .001) {
     lg_prior <- loggamma_prior(lg_shape, lg_rate)
     
     slopes <- list(
-        nslp = list(intercept = TRUE, fixed = bh_intercepts),
         gslp = list(intercept = TRUE, fixed = c('global_slope', bh_intercepts))
     )
     
@@ -54,17 +53,25 @@ model_fmls <- function(bh_intercepts, lg_shape = .001, lg_rate = .001) {
         wseas = seasonal('weeks_since_start_seas', n = 52, hyper = lg_prior)
     )
     
+    superannual_components <- list(
+        nmar1 = '',
+        mar1 = ar1(
+            'month_year_ar1', group = 'month_id',
+            control.group = "list(model='iid')", hyper = lg_prior
+        )
+    )
+    
     remainder_components <- list(
         iid('remainder_iid', hyper = lg_prior)
     )
     
     temperature_components <- list(
         nt = '',
-        awrw1 = list(
+        awiid = list(
             fixed = 'weekly_t2m_anomaly',
-            rw1(
-                'week_of_year_anomaly_rw1', 'weekly_t2m_anomaly',
-                cyclic = TRUE, hyper = lg_prior
+            iid(
+                'week_of_year_anomaly_iid', 'weekly_t2m_anomaly',
+                hyper = lg_prior
             )
         )
     )
@@ -74,9 +81,10 @@ model_fmls <- function(bh_intercepts, lg_shape = .001, lg_rate = .001) {
         week_components,
         seasonal_components,
         remainder_components,
+        superannual_components,
         temperature_components
     )
-    
+
     model_names <- fml_grid %>%
         make_cols_from_list_names %>%
         select(ends_with('name')) %>%

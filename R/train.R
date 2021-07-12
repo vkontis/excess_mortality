@@ -22,15 +22,19 @@ make_copies <- function(d, var, n = 0, names = character(0)) {
 # variable with NAs in the "out-of-sample" period and creating copies of the 
 # indicators used for random effects.`prediction_period` is the number of 
 # weeks at the end of the time series which are used for prediction.
-prep_train_data <- function(data, prediction_period = 15) {
+prep_train_data <- function(data, prediction_period = 52) {
     data %>%
         group_by(country, sex, age) %>% 
         mutate(
             out_of_sample = row_number() > n() - prediction_period,
             y = if_else(out_of_sample, NA_real_, deaths),
+            year = lubridate::year(week),
             weeks_since_start = week_id,
             global_slope = weeks_since_start
         ) %>%
+        mutate(year_id = year - min(year) + 1) %>%
+        make_copies('month_of_year', names = c('month_id')) %>%
+        make_copies('year_id', names = c('month_year_ar1')) %>%
         make_copies('weeks_since_start', names = c(
             'remainder_iid',
             'weeks_since_start_rw1',
@@ -54,7 +58,7 @@ prep_train_data <- function(data, prediction_period = 15) {
             'week_of_year_anomaly_rw2',
             'week_of_year_anomaly_iid',
             'week_of_year_anomaly_ar1'
-        )) %>% 
+        )) %>%
         ungroup
 }
 
@@ -113,9 +117,7 @@ train_one <- function(
                     control.predictor = list(link = 1),
                     control.compute = list(dic = TRUE, config = TRUE),
                     control.inla = list(
-                        int.strategy = 'eb', strategy = 'gaussian', 
-                        diagonal = 10000
-                    )
+                        int.strategy = 'eb', strategy = 'gaussian', diagonal = 10000)
                 )
                 inla(
                     formula = formula, family = 'poisson', data = data,
@@ -132,9 +134,39 @@ train_one <- function(
             }
         )
     }
+    if ('error' %in% class(m) && refit_on_error) {
+        logging::loginfo('Attempting to re-fit, using non-scaled model for initial configuration.')
+        m <- tryCatch(
+            expr = {
+                inla.setOption(scale.model.default = FALSE)
+                m_init <- inla(
+                    formula = formula, family = 'poisson', data = data,
+                    E = population,
+                    control.predictor = list(link = 1),
+                    control.compute = list(dic = TRUE, config = TRUE)
+                )
+                inla(
+                    formula = formula, family = 'poisson', data = data,
+                    E = population,
+                    control.predictor = list(link = 1),
+                    control.compute = list(dic = TRUE, config = TRUE),
+                    control.mode = list(result = m_init, restart = TRUE)
+                )
+            },
+            error = function(e) {
+                logging::logerror(paste0('Failed to converge: ', e))
+                return(e)
+            },
+            finally = {
+                inla.setOption(scale.model.default = TRUE)
+            }
+        )
+    }
     if ('error' %in% class(m)) {
         logging::logerror('Failed to run model, exiting')
         return(m)
+    } else {
+        logging::loginfo('Model ran successfully.')
     }
     
     time_taken <- as.numeric(difftime(Sys.time(), t0, units = 'secs'))
