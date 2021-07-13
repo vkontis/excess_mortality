@@ -62,5 +62,6 @@ excess_result_summaries <- summarise_results(excess_results)
 
 # Save results
 dir.create(OUTPUT_DIR, showWarnings = FALSE)
-write_csv(result_summaries, file.path(OUTPUT_DIR, 'result_summaries.csv'))
+write_csv(excess_result_summaries, file.path(OUTPUT_DIR, 'result_summaries.csv'))
+
 
