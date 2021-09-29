@@ -1,6 +1,6 @@
 # Excess mortality estimation
 
-This repository contains the code used in [V. Kontis, J.E. Bennett, T. Rashid, R.M. Parks, J. Pearson-Stuttard, M. Guillot, P. Asaria, B. Zhou, M. Battaglini, G. Corsetti, M. McKee, M. Di Cesare, C. D. Mathers and M. Ezzati, Magnitude, demographics and dynamics of the effect of the first wave of the COVID-19 pandemic on all-cause mortality in 21 industrialized countries. Nature Medicine (2020). doi: 0.1038/s41591-020-1112-0](https://doi.org/10.1038/s41591-020-1112-0).
+This repository contains the code used in [V. Kontis, J.E. Bennett, R.M. Parks, T. Rashid, J. Pearson-Stuttard, P. Asaria, B. Zhou, M. Guillot, C. D. Mathers Y.-H. Khang, M. McKee and M. Ezzati, Lessons learned and lessons missed: impact of the coronavirus disease 2019 (COVID-19) pandemic on all-cause mortality in 40 industrialised countries prior to mass vaccination.]()
 
 
 ## Dependencies
@@ -16,12 +16,12 @@ install.packages(c('tidyverse', 'glue', 'logging', 'matrixStats'))
 
 ## Data
 
-Weekly deaths data, for all countries until the end of May are available in `data/data.csv`. The data sources are detailed in the published paper. The column `week` contains the date indicating the start of the week. The columns `t2m` and `weekly_t2m_anomaly` contain (weekly average) temperature and deviation of temperature from the long-term average in each week.
+Weekly deaths data, for all countries are available in `data/data.csv`. The data sources are detailed in the published paper. The column `week` contains the date indicating the start of the week. The columns `t2m` and `weekly_t2m_anomaly` contain (weekly average) temperature and deviation of temperature from the long-term average in each week.
 
 
 ## How to run models
 
-To run the models, modify `run.R` by setting the variables `OUTPUT_DIR`, `COUNTRIES`, `SEXES` and `AGES` to the desired values, and then run the script. It is recommended to run countries in different R sessions, by using a different output folder for each country.
+The countries, ages, and sexes for which the analysis is to be run are specified in a csv file (see `data/analysis_units.csv` for an example). Create a csv file with only the countries, ages and sexes to be analysed (the country, age and sex values must match those in `data/data.csv`). Then modify `run.R` so that the file you have created is loaded in the `ANALYSIS_UNITS` variable. Finally, run `run.R`.
 
 
 ## Detailed results
