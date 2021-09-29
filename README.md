@@ -27,3 +27,10 @@ The countries, ages, and sexes for which the analysis is to be run are specified
 ## Detailed results
 
 The file `output/result_summaries.csv` contains results by country, sex, week and age group, as well as totals across sexes and age groups. The columns between `q025` and `q975` contain the quantiles of interest. For example, `q025` contains the 2.5th percentile, `q050` the 5th percentile, and so on.
+
+
+## License
+
+Data in `data/data.csv` are provided under the Creative Commons Zero (CC0) license.
+The code is provided under the GNU Affero GPL v3 license.
+The R libraries used (listed under __Dependencies__) may have different licenses.
