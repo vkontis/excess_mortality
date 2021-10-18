@@ -1,4 +1,3 @@
-# Excess mortality estimation
 
 This repository contains data and code used in 
 
